@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Client list</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 row" style="justify-content:center">
+        <h2>Clients</h2>
+        <a style="position:absolute;right:0;margin-right:5px" th:href="@{/logout}" class="btn btn-primary">Log out</a>
+    </div>
+
+    <div class="row">
+        <a th:href="@{/add}" style="margin-bottom: 5px" class="btn btn-primary">Add client</a>
+        <table th:if="${clients.size()>0}" class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Username</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="i : ${#numbers.sequence(0, clients.size()-1)}">
+                <th scope="row" th:text="${i+1}"></th>
+                <td th:text="${clients.get(i).getFirstName()}"></td>
+                <td th:text="${clients.get(i).getLastName()}"></td>
+                <td th:text="${clients.get(i).getUsername()}"></td>
+                <td><a th:href="@{/edit/{id}(id=${clients.get(i).getId()})}" style="float: right" class="btn btn-primary">Edit client</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <table th:unless="${clients.size()>0}" class="table">
+            <thead>
+            <tr>
+                <td class="text-center">No clients to display</td>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2023 Del Remi Liik</p>
+</footer>
+</body>
+</html>

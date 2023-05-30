@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Update Client</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Update client</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+            <form class="needs-validation" novalidate action="#" th:action="@{/edit/{id}(id=${clientId})}" th:object="${clientCreationDto}" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="firstName">First name</label>
+                        <input type="text" th:field="*{firstName}" class="form-control" id="firstName" placeholder="First name">
+                        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="lastName">Last name</label>
+                        <input type="text" th:field="*{lastName}" class="form-control" id="lastName" placeholder="Last name">
+                        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="username">Username</label>
+                    <input type="text" th:field="*{username}" class="form-control" id="username" placeholder="Username">
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
+                    <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="you@example.com">
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address">Address</label>
+                    <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="1234 Main St">
+                    <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="country">Country</label>
+                    <select class="custom-select d-block w-100" id="country" th:field="*{country}">
+                        <option th:value="${null}">Choose...</option>
+                        <option th:each="country : ${countries}" th:value="${country.getId()}" th:text="${country.getName()}"></option>
+                    </select>
+                    <span th:if="${#fields.hasErrors('country')}" th:errors="*{country}" class="text-danger"></span>
+                </div>
+                <hr class="mb-4">
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Update client</button>
+            </form>
+            <a style="margin-top: 5px" th:href="@{/}" class="btn btn-primary btn-lg btn-block">Cancel</a>
+        </div>
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2023 Del Remi Liik</p>
+    </footer>
+</div>
+</body>
+</html>
