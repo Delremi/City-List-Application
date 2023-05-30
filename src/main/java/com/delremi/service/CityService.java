@@ -8,6 +8,8 @@ import com.delremi.repository.CityRepository;
 import com.delremi.security.AuthUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +36,8 @@ public class CityService {
     }
 
     @Transactional(readOnly = true)
-    public List<City> getCities() throws EntityNotFoundException {
-        return cityRepository.findAll();
+    public Page<City> getCities(int page, int pageSize) throws EntityNotFoundException {
+        return cityRepository.findAll(PageRequest.of(page, pageSize));
     }
 
     @Transactional(readOnly = true)
