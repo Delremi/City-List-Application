@@ -19,6 +19,13 @@
         <a style="position:absolute;right:0;margin-right:5px" th:href="@{/logout}" class="btn btn-primary">Log out</a>
     </div>
 
+    <div>
+        <form th:action="@{/}" method="get">
+            <input type="text" th:name="search" th:value="${searchTerm}"/>
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
+
     <div class="row">
         <table th:if="${cityPage.content.size()>0}" class="table">
             <thead>
@@ -50,7 +57,7 @@
     <div class="row" style="justify-content:center">
         <ul th:if="${cityPage.totalPages > 0}" class="pagination">
             <li th:class="${(pageNumber==(cityPage.number + 1) ? 'active' : '') + ' page-item'}" th:each="pageNumber : ${pageNumbers}">
-                <a th:href="@{/(size=${cityPage.size}, page=${pageNumber-1})}"
+                <a th:href="@{/(size=${cityPage.size}, page=${pageNumber-1}, search=${searchTerm})}"
                    th:text=${pageNumber}
                    th:class="page-link"
                 ></a>

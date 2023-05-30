@@ -3,18 +3,13 @@ package com.delremi.service;
 import com.delremi.dto.CityEditDto;
 import com.delremi.exception.EntityNotFoundException;
 import com.delremi.model.City;
-import com.delremi.model.User;
 import com.delremi.repository.CityRepository;
-import com.delremi.security.AuthUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -36,8 +31,8 @@ public class CityService {
     }
 
     @Transactional(readOnly = true)
-    public Page<City> getCities(int page, int pageSize) throws EntityNotFoundException {
-        return cityRepository.findAll(PageRequest.of(page, pageSize));
+    public Page<City> getCities(int page, int pageSize, String searchTerm) throws EntityNotFoundException {
+        return cityRepository.findAllByNameContainsIgnoreCase(searchTerm, PageRequest.of(page, pageSize));
     }
 
     @Transactional(readOnly = true)

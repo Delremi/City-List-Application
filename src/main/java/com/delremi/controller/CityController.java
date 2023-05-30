@@ -9,14 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -27,9 +23,15 @@ public class CityController {
     private CityService cityService;
 
     @GetMapping
-    public String showCountryList(Model model, @RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) throws EntityNotFoundException {
-        Page<City> cityPage = cityService.getCities(page.orElse(0), size.orElse(5));
+    public String showCityList(
+            Model model,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "3") Integer size,
+            @RequestParam(defaultValue = "") String search) throws EntityNotFoundException {
+
+        Page<City> cityPage = cityService.getCities(page, size, search);
         model.addAttribute("cityPage", cityPage);
+        model.addAttribute("searchTerm", search);
         int totalPages = cityPage.getTotalPages();
         if (totalPages > 0) {
             List<Integer> pageNumbers = IntStream
