@@ -5,6 +5,7 @@ import com.delremi.exception.EntityNotFoundException;
 import com.delremi.security.CustomUserDetailsService;
 import com.delremi.service.CityService;
 import com.delremi.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +14,15 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
+import java.util.Scanner;
 
 @SpringBootApplication
+@Slf4j
 public class SpringThymeleafDemoApplication {
 
     public static void main(String[] args) {
@@ -51,13 +59,17 @@ public class SpringThymeleafDemoApplication {
         userService.saveUser("del", "del");
     }
 
-    private void populateCities(CityService cityService) throws EntityNotFoundException {
-        cityService.saveCity(CityEditDto.of("Tokyo", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/500px-Skyscrapers_of_Shinjuku_2009_January.jpg"));
-        cityService.saveCity(CityEditDto.of("Jakarta", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Jakarta_Pictures-1.jpg/327px-Jakarta_Pictures-1.jpg"));
-        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
-        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
-        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
-        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
-        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
+    private void populateCities(CityService cityService) throws FileNotFoundException {
+        try (Scanner scanner = new Scanner(ResourceUtils.getFile("classpath:cities.csv"))) {
+            while (scanner.hasNextLine()) {
+                var line = scanner.nextLine();
+                var split = line.split(",");
+                try {
+                    cityService.saveCity(CityEditDto.of(split[1], split[2]));
+                } catch (Exception e) {
+                    log.error("Failed to create city from string '{}'. Skipping line.", line);
+                }
+            }
+        }
     }
 }
