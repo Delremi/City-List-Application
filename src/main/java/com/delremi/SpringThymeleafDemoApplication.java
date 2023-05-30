@@ -1,6 +1,9 @@
 package com.delremi;
 
+import com.delremi.dto.CityEditDto;
+import com.delremi.exception.EntityNotFoundException;
 import com.delremi.security.CustomUserDetailsService;
+import com.delremi.service.CityService;
 import com.delremi.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,11 +22,10 @@ public class SpringThymeleafDemoApplication {
     }
 
     @Bean
-    CommandLineRunner run(UserService userService) {
+    CommandLineRunner run(UserService userService, CityService cityService) {
         return args -> {
-            userService.saveUser("user1", "pass");
-            userService.saveUser("user2", "pass");
-            userService.saveUser("user3", "pass");
+            populateUsers(userService);
+            populateCities(cityService);
         };
     }
 
@@ -43,5 +45,19 @@ public class SpringThymeleafDemoApplication {
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService());
         return provider;
+    }
+
+    private void populateUsers(UserService userService) {
+        userService.saveUser("del", "del");
+    }
+
+    private void populateCities(CityService cityService) throws EntityNotFoundException {
+        cityService.saveCity(CityEditDto.of("Tokyo", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/500px-Skyscrapers_of_Shinjuku_2009_January.jpg"));
+        cityService.saveCity(CityEditDto.of("Jakarta", "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Jakarta_Pictures-1.jpg/327px-Jakarta_Pictures-1.jpg"));
+        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
+        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
+        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
+        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
+        cityService.saveCity(CityEditDto.of("Dehli", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/IN-DL.svg/439px-IN-DL.svg.png"));
     }
 }

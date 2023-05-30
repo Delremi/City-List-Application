@@ -49,12 +49,12 @@ Running the application registers three default users to the application. The cr
 2. user2:pass
 3. user3:pass
 
-Adding a client:
+Adding a city:
 ```
 http://localhost:8080/add
 ```
 
-Editing a client:
+Editing a city:
 ```
 http://localhost:8080/edit/<userId>
 ```

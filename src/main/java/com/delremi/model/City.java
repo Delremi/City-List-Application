@@ -1,12 +1,14 @@
 package com.delremi.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-public class Country {
+@Setter
+public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,4 +16,7 @@ public class Country {
 
     @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
+    private String imageLink;
 }

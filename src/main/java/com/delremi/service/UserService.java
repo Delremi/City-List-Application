@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -18,12 +19,14 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Transactional
     public User saveUser(String username, String password) {
         User result = userRepository.save(new User(null, username, passwordEncoder.encode(password)));
         log.info("Saved User with ID " + result.getId());
         return result;
     }
 
+    @Transactional(readOnly = true)
     public User getUser(int id) throws EntityNotFoundException {
         User user = userRepository.findById(id);
         if (user == null) {

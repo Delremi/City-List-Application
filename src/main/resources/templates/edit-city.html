@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Edit city</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Update city</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 order-md-1">
+            <form class="needs-validation" novalidate action="#" th:action="@{/edit/{id}(id=${cityId})}" th:object="${cityEditDto}" method="post">
+                <div class="mb-3">
+                    <label for="name">Name</label>
+                    <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Name">
+                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="imageLink">Image link</label>
+                    <input type="text" th:field="*{imageLink}" class="form-control" id="imageLink" placeholder="Image link">
+                    <span th:if="${#fields.hasErrors('imageLink')}" th:errors="*{imageLink}" class="text-danger"></span>
+                </div>
+
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Update city</button>
+            </form>
+            <a style="margin-top: 5px" th:href="@{/}" class="btn btn-primary btn-lg btn-block">Cancel</a>
+        </div>
+    </div>
+
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2023 Del Remi Liik</p>
+    </footer>
+</div>
+</body>
+</html>
