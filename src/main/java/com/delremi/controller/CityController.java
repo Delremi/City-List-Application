@@ -1,6 +1,7 @@
 package com.delremi.controller;
 
 import com.delremi.dto.CityEditDto;
+import com.delremi.pagination.GetPaginationNumbers;
 import com.delremi.exception.EntityNotFoundException;
 import com.delremi.model.City;
 import com.delremi.service.CityService;
@@ -12,15 +13,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 public class CityController {
 
     @Autowired
     private CityService cityService;
+
+    @Autowired
+    private GetPaginationNumbers getPaginationNumbers;
 
     @GetMapping
     public String showCityList(
@@ -32,14 +33,7 @@ public class CityController {
         Page<City> cityPage = cityService.getCities(page, size, search);
         model.addAttribute("cityPage", cityPage);
         model.addAttribute("searchTerm", search);
-        int totalPages = cityPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream
-                    .rangeClosed(1, totalPages)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
+        model.addAttribute("pageNumbers", getPaginationNumbers.execute(cityPage));
         return "cities";
     }
 

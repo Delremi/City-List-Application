@@ -56,9 +56,14 @@
 
     <div class="row" style="justify-content:center">
         <ul th:if="${cityPage.totalPages > 0}" class="pagination">
-            <li th:class="${(pageNumber==(cityPage.number + 1) ? 'active' : '') + ' page-item'}" th:each="pageNumber : ${pageNumbers}">
-                <a th:href="@{/(size=${cityPage.size}, page=${pageNumber-1}, search=${searchTerm})}"
-                   th:text=${pageNumber}
+            <li th:class="${(pageNumber.isEnabled() && pageNumber.getPageNumber().get()==cityPage.number ? 'active' : '') + (!pageNumber.isEnabled() ? ' disabled' : '') + ' page-item'}" th:each="pageNumber : ${pageNumbers}">
+                <a th:if="${pageNumber.isEnabled()}"
+                   th:href="@{/(size=${cityPage.size}, page=${pageNumber.getPageNumber().get()}, search=${searchTerm})}"
+                   th:text=${pageNumber.getPageNumber().get()+1}
+                   th:class="page-link"
+                ></a>
+                <a th:unless="${pageNumber.isEnabled()}"
+                   th:text="..."
                    th:class="page-link"
                 ></a>
             </li>

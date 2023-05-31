@@ -11,7 +11,7 @@ public class CityEditDto {
 
     @NotBlank(message = "City name must not be empty")
     @Size(max = 50, message = "City name must not be longer than 50 characters")
-    @Pattern(regexp = "^$|^[A-Za-züõöäÜÕÖÄ]+$", message = "City name must contain only characters")
+    @Pattern(regexp = "^$|^[A-Za-züõöäÜÕÖÄ ]+$", message = "City name must contain only characters")
     private String name;
 
     @NotBlank(message = "Image link must not be empty")
