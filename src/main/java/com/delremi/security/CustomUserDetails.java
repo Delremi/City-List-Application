@@ -1,11 +1,13 @@
 package com.delremi.security;
 
+import com.delremi.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -18,15 +20,15 @@ public class CustomUserDetails implements UserDetails {
     private final boolean isEnabled;
     private final Integer userId;
 
-    public CustomUserDetails(String username, String password, int userId) {
-        this.authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    public CustomUserDetails(String username, String password, int userId, List<Role> roles) {
+        this.authorities = getUserAuthorities(roles);
         this.username = username;
         this.password = password;
+        this.userId = userId;
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
         this.isEnabled = true;
-        this.userId = userId;
     }
 
     @Override
@@ -66,5 +68,12 @@ public class CustomUserDetails implements UserDetails {
 
     public int getUserId() {
         return userId;
+    }
+
+    private List<SimpleGrantedAuthority> getUserAuthorities(List<Role> roles) {
+        return roles.stream()
+                .map(Role::getRole)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 }
