@@ -32,7 +32,7 @@ public class CityController {
     public String showCityList(
             Model model,
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "3") Integer size,
+            @RequestParam(defaultValue = "5") Integer size,
             @RequestParam(defaultValue = "") String search) {
 
         var cityPage = cityService.getCities(page, size, search);

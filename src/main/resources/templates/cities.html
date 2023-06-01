@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>City list</title>
+    <title>City List Application</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -15,14 +15,14 @@
 <body class="bg-light">
 <div class="container">
     <div class="py-5 text-center">
-        <h2>Cities</h2>
+        <h2>City List Application</h2>
         <a style="position:absolute;right:0;margin-right:5px" th:href="@{/logout}" class="btn btn-primary">Log out</a>
         <div th:if="${updateSuccessCity}" class="toast bg-success rounded" role="alert" aria-live="assertive" aria-atomic="true" style="width: 60%; margin: auto; padding-left: 10px; padding-right: 10px; color: white">
             <div th:text="'Update successful for city: ' + ${updateSuccessCity}" class="toast-body py-2"></div>
         </div>
     </div>
 
-    <div>
+    <div style="text-align: center; padding-bottom: 1rem;">
         <form th:action="@{/}" method="get">
             <input type="text" th:name="search" th:value="${searchTerm}"/>
             <input type="submit" value="Search"/>
@@ -31,20 +31,12 @@
 
     <div class="row">
         <table th:if="${cityPage.content.size()>0}" class="table">
-            <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Image</th>
-                <th></th>
-            </tr>
-            </thead>
             <tbody>
             <tr th:each="i : ${#numbers.sequence(0, cityPage.content.size()-1)}">
-                <th scope="row" th:text="${cityPage.size*cityPage.number+i+1}"></th>
-                <td th:text="${cityPage.content.get(i).getName()}"></td>
-                <td><img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed"/></td>
-                <td><a sec:authorize="hasRole('ROLE_EDITOR')" th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" style="float: right" class="btn btn-primary">Edit city</a></td>
+                <th scope="row" style="vertical-align:middle;"><p th:text="${cityPage.size*cityPage.number+i+1}"></p></th>
+                <td style="text-align: center; vertical-align:middle;"><p th:text="${cityPage.content.get(i).getName()}"></p></td>
+                <td style="text-align: center;"><img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed"/></td>
+                <td style="vertical-align:middle;"><a sec:authorize="hasRole('ROLE_EDITOR')" th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" style="float: right;" class="btn btn-primary">Edit city</a></td>
             </tr>
             </tbody>
         </table>
