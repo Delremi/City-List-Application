@@ -18,13 +18,11 @@ public class CustomUserDetails implements UserDetails {
     private final boolean isAccountNonLocked;
     private final boolean isCredentialsNonExpired;
     private final boolean isEnabled;
-    private final Integer userId;
 
-    public CustomUserDetails(String username, String password, int userId, List<Role> roles) {
+    public CustomUserDetails(String username, String password, List<Role> roles) {
         this.authorities = getUserAuthorities(roles);
         this.username = username;
         this.password = password;
-        this.userId = userId;
         this.isAccountNonExpired = true;
         this.isAccountNonLocked = true;
         this.isCredentialsNonExpired = true;
@@ -64,10 +62,6 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return isEnabled;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 
     private List<SimpleGrantedAuthority> getUserAuthorities(List<Role> roles) {

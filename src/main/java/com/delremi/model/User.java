@@ -8,9 +8,9 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class User {
 
     @Id

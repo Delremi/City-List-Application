@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class GetPaginationNumbers {
+public class GetPaginationButtons {
 
     public List<PaginationButton> execute(Page<City> currentPage) {
         List<PaginationButton> pageNumbers = new ArrayList<>();
         int currentPageNumber = currentPage.getNumber();
         int totalPages = currentPage.getTotalPages();
+        
         if (currentPageNumber > 1) {
             pageNumbers.add(PaginationButton.of(0));
         }

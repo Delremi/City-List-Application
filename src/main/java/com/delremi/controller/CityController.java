@@ -2,11 +2,9 @@ package com.delremi.controller;
 
 import com.delremi.dto.CityEditDto;
 import com.delremi.exception.EntityNotFoundException;
-import com.delremi.model.City;
-import com.delremi.pagination.GetPaginationNumbers;
+import com.delremi.pagination.GetPaginationButtons;
 import com.delremi.service.CityService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,13 +20,11 @@ import static com.delremi.security.Roles.EDITOR;
 import static com.delremi.security.Roles.VIEWER;
 
 @Controller
+@RequiredArgsConstructor
 public class CityController {
 
-    @Autowired
-    private CityService cityService;
-
-    @Autowired
-    private GetPaginationNumbers getPaginationNumbers;
+    private final CityService cityService;
+    private final GetPaginationButtons getPaginationButtons;
 
     @GetMapping
     @Secured(VIEWER)
@@ -38,17 +34,17 @@ public class CityController {
             @RequestParam(defaultValue = "3") Integer size,
             @RequestParam(defaultValue = "") String search) throws EntityNotFoundException {
 
-        Page<City> cityPage = cityService.getCities(page, size, search);
+        var cityPage = cityService.getCities(page, size, search);
         model.addAttribute("cityPage", cityPage);
         model.addAttribute("searchTerm", search);
-        model.addAttribute("pageNumbers", getPaginationNumbers.execute(cityPage));
+        model.addAttribute("pageNumbers", getPaginationButtons.execute(cityPage));
         return "cities";
     }
 
     @GetMapping("/edit/{id}")
     @Secured(EDITOR)
     public String showEditForm(@PathVariable int id, Model model, CityEditDto cityEditDto) throws EntityNotFoundException {
-        City city = cityService.getCity(id);
+        var city = cityService.getCity(id);
         cityEditDto = CityEditDto.of(city.getName(), city.getImageLink());
         return loadEditForm(id, model, cityEditDto);
     }

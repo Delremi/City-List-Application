@@ -1,6 +1,5 @@
 package com.delremi.security;
 
-import com.delremi.model.User;
 import com.delremi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +17,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        var user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found in the database", username));
         }
-        return new CustomUserDetails(user.getUsername(), user.getPassword(), user.getId(), user.getRoles());
+        return new CustomUserDetails(user.getUsername(), user.getPassword(), user.getRoles());
     }
 }
