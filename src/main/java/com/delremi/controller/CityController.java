@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -32,7 +33,7 @@ public class CityController {
             Model model,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "3") Integer size,
-            @RequestParam(defaultValue = "") String search) throws EntityNotFoundException {
+            @RequestParam(defaultValue = "") String search) {
 
         var cityPage = cityService.getCities(page, size, search);
         model.addAttribute("cityPage", cityPage);
@@ -43,19 +44,28 @@ public class CityController {
 
     @GetMapping("/edit/{id}")
     @Secured(EDITOR)
-    public String showEditForm(@PathVariable int id, Model model, CityEditDto cityEditDto) throws EntityNotFoundException {
+    public String showEditForm(
+            @PathVariable int id,
+            Model model) throws EntityNotFoundException {
+
         var city = cityService.getCity(id);
-        cityEditDto = CityEditDto.of(city.getName(), city.getImageLink());
-        return loadEditForm(id, model, cityEditDto);
+        return loadEditForm(id, model, CityEditDto.of(city.getName(), city.getImageLink()));
     }
 
     @PostMapping("/edit/{id}")
     @Secured(EDITOR)
-    public String updateCity(@PathVariable int id, @Valid CityEditDto cityEditDto, BindingResult bindingResult, Model model) throws EntityNotFoundException {
+    public String updateCity(
+            @PathVariable int id,
+            @Valid CityEditDto cityEditDto,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes) throws EntityNotFoundException {
+
         if (bindingResult.hasErrors()) {
             return loadEditForm(id, model, cityEditDto);
         }
         cityService.updateCity(id, cityEditDto);
+        redirectAttributes.addFlashAttribute("updateSuccessCity", cityEditDto.getName());
         return "redirect:/";
     }
 

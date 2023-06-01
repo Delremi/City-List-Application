@@ -14,9 +14,12 @@
 
 <body class="bg-light">
 <div class="container">
-    <div class="py-5 row" style="justify-content:center">
+    <div class="py-5 text-center">
         <h2>Cities</h2>
         <a style="position:absolute;right:0;margin-right:5px" th:href="@{/logout}" class="btn btn-primary">Log out</a>
+        <div th:if="${updateSuccessCity}" class="toast bg-success rounded" role="alert" aria-live="assertive" aria-atomic="true" style="width: 60%; margin: auto; padding-left: 10px; padding-right: 10px; color: white">
+            <div th:text="'Update successful for city: ' + ${updateSuccessCity}" class="toast-body py-2"></div>
+        </div>
     </div>
 
     <div>
