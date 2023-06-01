@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.delremi</groupId>
-	<artifactId>spring-thymeleaf-demo</artifactId>
+	<artifactId>city-list-application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-thymeleaf-demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>city-list-application</name>
+	<description>City list application</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

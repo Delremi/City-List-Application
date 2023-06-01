@@ -24,10 +24,10 @@ import static com.delremi.security.Roles.VIEWER;
 
 @SpringBootApplication
 @Slf4j
-public class SpringThymeleafDemoApplication {
+public class CityListApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringThymeleafDemoApplication.class, args);
+        SpringApplication.run(CityListApplication.class, args);
     }
 
     @Bean
