@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,7 +41,7 @@
                 <th scope="row" th:text="${cityPage.size*cityPage.number+i+1}"></th>
                 <td th:text="${cityPage.content.get(i).getName()}"></td>
                 <td><img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed"/></td>
-                <td><a th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" style="float: right" class="btn btn-primary">Edit city</a></td>
+                <td><a sec:authorize="hasRole('ROLE_EDITOR')" th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" style="float: right" class="btn btn-primary">Edit city</a></td>
             </tr>
             </tbody>
         </table>

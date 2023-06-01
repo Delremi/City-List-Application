@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.delremi.security.Roles.EDITOR;
 import static com.delremi.security.Roles.VIEWER;
 
 @SpringBootApplication
@@ -57,6 +58,7 @@ public class SpringThymeleafDemoApplication {
 
     private void populateUsers(UserService userService) {
         userService.saveUser("del", "del", List.of(VIEWER));
+        userService.saveUser("del1", "del1", List.of(VIEWER, EDITOR));
     }
 
     private void populateCities(CityService cityService) throws FileNotFoundException {
