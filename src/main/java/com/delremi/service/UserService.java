@@ -21,11 +21,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User saveUser(String username, String password, List<String> roles) {
+    public void saveUser(String username, String password, List<String> roles) {
         var userRoles = roleRepository.findAllByRoleIn(roles);
         var result = userRepository.save(new User(null, username, passwordEncoder.encode(password), userRoles));
         log.info("Saved User with ID " + result.getId());
-        log.info(result.toString());
-        return result;
     }
 }
