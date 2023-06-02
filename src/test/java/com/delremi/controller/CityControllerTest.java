@@ -4,7 +4,7 @@ import com.delremi.dto.CityEditDto;
 import com.delremi.model.City;
 import com.delremi.model.Role;
 import com.delremi.pagination.GetPaginationButtons;
-import com.delremi.pagination.PaginationDisabledButton;
+import com.delremi.pagination.PaginationButton;
 import com.delremi.repository.UserRepository;
 import com.delremi.security.CustomUserDetails;
 import com.delremi.service.CityService;
@@ -72,7 +72,7 @@ class CityControllerTest {
     void showCityList_whenAuthorized_shouldDisplayMainPage() throws Exception {
         // given
         var page = buildPage(List.of(buildCity()), PageRequest.of(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE));
-        var paginationButton = new PaginationDisabledButton();
+        var paginationButton = PaginationButton.of(null);
         when(cityService.getCities(DEFAULT_PAGE_NUMBER, DEFAULT_PAGE_SIZE, DEFAULT_SEARCH_TERM)).thenReturn(page);
         when(getPaginationButtons.execute(page)).thenReturn(List.of(paginationButton));
 
@@ -107,7 +107,7 @@ class CityControllerTest {
         var pageSize = 22;
         var searchTerm = "33";
         var page = buildPage(List.of(buildCity()), PageRequest.of(pageNumber, pageSize));
-        var paginationButton = new PaginationDisabledButton();
+        var paginationButton = PaginationButton.of(null);
         when(cityService.getCities(pageNumber, pageSize, searchTerm)).thenReturn(page);
         when(getPaginationButtons.execute(page)).thenReturn(List.of(paginationButton));
 

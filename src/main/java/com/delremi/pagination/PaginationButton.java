@@ -1,21 +1,23 @@
 package com.delremi.pagination;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Optional;
-
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor(staticName = "of")
 public class PaginationButton {
-    private int pageNumber;
-
-    public Optional<Integer> getPageNumber() {
-        return Optional.of(pageNumber);
-    }
+    private Integer pageNumber;
 
     public boolean isEnabled() {
-        return true;
+        return this.pageNumber != null;
+    }
+
+    public void disable() {
+        this.pageNumber = null;
     }
 }
 
