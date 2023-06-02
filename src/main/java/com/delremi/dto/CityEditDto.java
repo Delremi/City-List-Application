@@ -1,12 +1,16 @@
 package com.delremi.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Getter
 @AllArgsConstructor(staticName = "of")
+@EqualsAndHashCode
 public class CityEditDto {
 
     @NotBlank(message = "City name must not be empty")
