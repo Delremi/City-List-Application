@@ -1,6 +1,6 @@
 package com.delremi.service;
 
-import com.delremi.model.User;
+import com.delremi.model.CustomUser;
 import com.delremi.repository.RoleRepository;
 import com.delremi.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class UserService {
     @Transactional
     public void saveUser(String username, String password, List<String> roles) {
         var userRoles = roleRepository.findAllByRoleIn(roles);
-        var result = userRepository.save(new User(null, username, passwordEncoder.encode(password), userRoles));
+        var result = userRepository.save(new CustomUser(null, username, passwordEncoder.encode(password), userRoles));
         log.info("Saved User with ID " + result.getId());
     }
 }

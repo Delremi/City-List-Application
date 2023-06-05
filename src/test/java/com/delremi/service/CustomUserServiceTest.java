@@ -1,7 +1,7 @@
 package com.delremi.service;
 
 import com.delremi.model.Role;
-import com.delremi.model.User;
+import com.delremi.model.CustomUser;
 import com.delremi.repository.RoleRepository;
 import com.delremi.repository.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class CustomUserServiceTest {
 
     private static final String USERNAME = "username12345";
     private static final String PASSWORD = "password12345";
@@ -36,7 +36,7 @@ class UserServiceTest {
     private UserService userService;
 
     @Captor
-    private ArgumentCaptor<User> userArgumentCaptor;
+    private ArgumentCaptor<CustomUser> userArgumentCaptor;
 
     @Test
     void saveUser_shouldSaveUser() {
@@ -44,7 +44,7 @@ class UserServiceTest {
         var userRole = new Role(-9999, USER_ROLE);
         when(roleRepository.findAllByRoleIn(List.of(USER_ROLE))).thenReturn(List.of(userRole));
         when(passwordEncoder.encode(PASSWORD)).thenReturn(ENCODED_PASSWORD);
-        when(userRepository.save(userArgumentCaptor.capture())).thenReturn(new User());
+        when(userRepository.save(userArgumentCaptor.capture())).thenReturn(new CustomUser());
 
         // when
         userService.saveUser(USERNAME, PASSWORD, List.of(USER_ROLE));

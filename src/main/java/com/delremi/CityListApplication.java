@@ -1,7 +1,8 @@
 package com.delremi;
 
 import com.delremi.dto.CityEditDto;
-import com.delremi.security.CustomUserDetailsService;
+import com.delremi.model.Role;
+import com.delremi.repository.RoleRepository;
 import com.delremi.service.CityService;
 import com.delremi.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,10 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.ResourceUtils;
 
 import java.io.FileNotFoundException;
@@ -31,29 +28,13 @@ public class CityListApplication {
     }
 
     @Bean
-    CommandLineRunner run(UserService userService, CityService cityService) {
+    CommandLineRunner run(UserService userService, CityService cityService, RoleRepository roleRepository) {
         return args -> {
+            roleRepository.save(new Role(null, "ROLE_EDITOR"));
+            roleRepository.save(new Role(null, "ROLE_VIEWER"));
             populateUsers(userService);
             populateCities(cityService);
         };
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder());
-        provider.setUserDetailsService(userDetailsService());
-        return provider;
     }
 
     private void populateUsers(UserService userService) {

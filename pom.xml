@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.2</version>
+		<version>3.1.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.delremi</groupId>
@@ -14,10 +14,11 @@
 	<name>city-list-application</name>
 	<description>City list application</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<version.lombok>1.18.26</version.lombok>
 		<version.mapstruct>1.5.3.Final</version.mapstruct>
 		<version.lombok-mapstruct>0.2.0</version.lombok-mapstruct>
+		<version.hibernate>6.2.0.Final</version.hibernate>
 	</properties>
 	<dependencies>
 
@@ -58,7 +59,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
@@ -74,6 +75,17 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok-mapstruct-binding</artifactId>
 			<version>${version.lombok-mapstruct}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${version.hibernate}</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>${version.hibernate}</version>
 		</dependency>
 
 		<!--test dependencies-->

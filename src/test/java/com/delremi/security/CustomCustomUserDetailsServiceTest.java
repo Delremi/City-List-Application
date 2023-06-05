@@ -1,7 +1,7 @@
 package com.delremi.security;
 
 import com.delremi.model.Role;
-import com.delremi.model.User;
+import com.delremi.model.CustomUser;
 import com.delremi.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class CustomUserDetailsServiceTest {
+class CustomCustomUserDetailsServiceTest {
 
     private static final String USERNAME = "user12345";
     private static final String PASSWORD = "password12345";
@@ -57,8 +57,8 @@ class CustomUserDetailsServiceTest {
     }
 
 
-    private User buildUser() {
-        return User.builder()
+    private CustomUser buildUser() {
+        return CustomUser.builder()
                 .username(USERNAME)
                 .password(PASSWORD)
                 .roles(ROLES)

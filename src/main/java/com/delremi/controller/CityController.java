@@ -4,6 +4,7 @@ import com.delremi.dto.CityEditDto;
 import com.delremi.exception.EntityNotFoundException;
 import com.delremi.pagination.GetPaginationButtons;
 import com.delremi.service.CityService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
-
 import static com.delremi.security.Roles.EDITOR;
 import static com.delremi.security.Roles.VIEWER;
 
@@ -27,7 +26,7 @@ public class CityController {
     private final CityService cityService;
     private final GetPaginationButtons getPaginationButtons;
 
-    @GetMapping
+    @GetMapping("/")
     @Secured(VIEWER)
     public String showCityList(
             Model model,
