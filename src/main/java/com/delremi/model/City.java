@@ -1,7 +1,10 @@
 package com.delremi.model;
 
+import com.delremi.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.Audited;
 
 @Entity
 @Builder
@@ -9,7 +12,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class City {
+@Audited
+@AuditOverride(forClass = Auditable.class)
+public class City extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
