@@ -2,6 +2,7 @@ package com.delremi.service;
 
 import com.delremi.dto.CityEditDto;
 import com.delremi.exception.EntityNotFoundException;
+import com.delremi.mapper.CityMapper;
 import com.delremi.model.City;
 import com.delremi.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class CityService {
 
     private final CityRepository cityRepository;
+    private final CityMapper cityMapper;
 
     @Transactional
     public void saveCity(CityEditDto cityEditDto) {
-        var city = City.builder()
-                .name(cityEditDto.getName())
-                .imageLink(cityEditDto.getImageLink())
-                .build();
-        var result = cityRepository.save(city);
+        var result = cityRepository.save(cityMapper.toEntity(cityEditDto));
         log.info("Saved City with ID " + result.getId());
     }
 

@@ -19,6 +19,6 @@ public class CityEditDto {
     private String name;
 
     @NotBlank(message = "Image link must not be empty")
-    @Size(max = 500, message = "Image link must not be longer than 500 characters")
+    @Size(max = 1000, message = "Image link must not be longer than 1000 characters")
     private String imageLink;
 }

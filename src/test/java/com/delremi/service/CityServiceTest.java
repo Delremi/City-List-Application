@@ -2,6 +2,7 @@ package com.delremi.service;
 
 import com.delremi.dto.CityEditDto;
 import com.delremi.exception.EntityNotFoundException;
+import com.delremi.mapper.CityMapper;
 import com.delremi.model.City;
 import com.delremi.repository.CityRepository;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,8 @@ class CityServiceTest {
 
     @Mock
     private CityRepository cityRepository;
+    @Mock
+    private CityMapper cityMapper;
     @InjectMocks
     private CityService cityService;
 
@@ -44,15 +47,15 @@ class CityServiceTest {
     void saveCity_shouldSaveCity() {
         // given
         var cityEditDto = buildCityEditDto();
-        when(cityRepository.save(cityArgumentCaptor.capture())).thenReturn(new City());
+        var city = buildNewCity();
+        when(cityMapper.toEntity(cityEditDto)).thenReturn(city);
+        when(cityRepository.save(city)).thenReturn(city);
 
         // when
         cityService.saveCity(cityEditDto);
 
         // then
-        assertThat(cityArgumentCaptor.getValue().getName()).isEqualTo(EDITED_CITY_NAME);
-        assertThat(cityArgumentCaptor.getValue().getImageLink()).isEqualTo(EDITED_CITY_IMAGE_LINK);
-        assertThat(cityArgumentCaptor.getValue().getId()).isNull();
+        verify(cityRepository).save(city);
     }
 
     @Test
@@ -129,6 +132,13 @@ class CityServiceTest {
                 .name(CITY_NAME)
                 .imageLink(CITY_IMAGE_LINK)
                 .id(CITY_ID)
+                .build();
+    }
+
+    private City buildNewCity() {
+        return City.builder()
+                .name(EDITED_CITY_NAME)
+                .imageLink(EDITED_CITY_IMAGE_LINK)
                 .build();
     }
 
