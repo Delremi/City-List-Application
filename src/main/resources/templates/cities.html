@@ -35,7 +35,7 @@
             <tr th:each="i : ${#numbers.sequence(0, cityPage.content.size()-1)}">
                 <th scope="row" style="vertical-align:middle;"><p th:text="${cityPage.size*cityPage.number+i+1}"></p></th>
                 <td style="text-align: center; vertical-align:middle;"><p th:text="${cityPage.content.get(i).getName()}"></p></td>
-                <td style="text-align: center;"><img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed"/></td>
+                <td style="text-align: center; max-width: 500px; max-height:500px"><img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed"/></td>
                 <td style="vertical-align:middle;"><a sec:authorize="hasRole('ROLE_EDITOR')" th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" style="float: right;" class="btn btn-primary">Edit city</a></td>
             </tr>
             </tbody>
