@@ -12,8 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
-<body class="bg-light">
-<div class="container">
+<div style="background-color: #e1e6ea;">
     <div class="py-5 text-center">
         <h2>City List Application</h2>
         <a style="position:absolute;right:0;margin-right:5px" th:href="@{/logout}" class="btn btn-primary">Log out</a>
@@ -21,22 +20,26 @@
             <div th:text="'Update successful for city: ' + ${updateSuccessCity}" class="toast-body py-2"></div>
         </div>
     </div>
-
     <div style="text-align: center; padding-bottom: 1rem;">
         <form th:action="@{/}" method="get">
             <input type="text" th:name="search" th:value="${searchTerm}"/>
             <input type="submit" value="Search"/>
         </form>
     </div>
-
+</div>
+<body class="bg-light">
+<div class="container">
     <div class="row">
         <table th:if="${cityPage.content.size()>0}" class="table">
             <tbody>
             <tr th:each="i : ${#numbers.sequence(0, cityPage.content.size()-1)}">
-                <th scope="row" style="vertical-align:middle;"><p th:text="${cityPage.size*cityPage.number+i+1}"></p></th>
-                <td style="text-align: center; vertical-align:middle;"><p th:text="${cityPage.content.get(i).getName()}"></p></td>
-                <td style="text-align: center;"><img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed" style="max-width: 500px; max-height:500px;"/></td>
-                <td style="vertical-align:middle;"><a sec:authorize="hasRole('ROLE_EDITOR')" th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" style="float: right;" class="btn btn-primary">Edit city</a></td>
+                <td style="text-align: center; padding: 2rem;">
+                    <h3 th:text="${cityPage.content.get(i).getName()}"></h3>
+                    <img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed" style="max-width: 500px; max-height:500px;"/>
+                    <div class="d-md-block" style="margin-top: 10px;">
+                        <a sec:authorize="hasRole('ROLE_EDITOR')" th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" class="btn btn-primary">Edit city</a>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>
