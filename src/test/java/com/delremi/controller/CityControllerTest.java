@@ -7,6 +7,7 @@ import com.delremi.pagination.GetPaginationButtons;
 import com.delremi.pagination.PaginationButton;
 import com.delremi.repository.UserRepository;
 import com.delremi.security.CustomUserDetails;
+import com.delremi.security.SecurityConfig;
 import com.delremi.service.CityService;
 import com.delremi.service.UserService;
 import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
@@ -20,6 +21,7 @@ import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -38,11 +40,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.equalToObject;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Import(SecurityConfig.class)
 @WebMvcTest(CityController.class)
 class CityControllerTest {
 
@@ -155,6 +159,7 @@ class CityControllerTest {
         // when, then
         mockMvc.perform(post("/edit/{cityId}", CITY_ID)
                         .with(user(buildUserDetails(EDITOR)))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content(buildFormData(updatedCityName, updatedCityImageLink)))
                 .andExpect(status().isFound())
@@ -176,6 +181,7 @@ class CityControllerTest {
         // when, then
         mockMvc.perform(post("/edit/{cityId}", CITY_ID)
                         .with(user(buildUserDetails(EDITOR)))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .content(buildFormData(invalidUpdatedCityName, updatedCityImageLink)))
                 .andExpect(status().isOk())
