@@ -14,17 +14,17 @@
 
 <div style="background-color: #e1e6ea;">
     <div class="py-5 text-center">
-        <h2>City List Application</h2>
+        <h2 style="display: inline-block;">City List Application</h2>
         <a style="position:absolute;right:0;margin-right:5px" th:href="@{/logout}" class="btn btn-primary">Log out</a>
-        <div th:if="${updateSuccessCity}" class="toast bg-success rounded" role="alert" aria-live="assertive" aria-atomic="true" style="width: 60%; margin: auto; padding-left: 10px; padding-right: 10px; color: white">
-            <div th:text="'Update successful for city: ' + ${updateSuccessCity}" class="toast-body py-2"></div>
-        </div>
     </div>
     <div style="text-align: center; padding-bottom: 1rem;">
         <form th:action="@{/}" method="get">
             <input type="text" th:name="search" th:value="${searchTerm}"/>
             <input type="submit" value="Search"/>
         </form>
+    </div>
+    <div th:if="${updateSuccessCity}" class="toast bg-success rounded text-center" role="alert" aria-live="assertive" aria-atomic="true" style="margin: auto; color: white">
+        <div th:text="'Update successful for city: ' + ${updateSuccessCity}" class="toast-body py-2"></div>
     </div>
 </div>
 <body class="bg-light">
