@@ -42,7 +42,7 @@
             <tr th:each="i : ${#numbers.sequence(0, cityPage.content.size()-1)}">
                 <td style="text-align: center; padding: 2rem;">
                     <h3 th:text="${cityPage.content.get(i).getName()}"></h3>
-                    <img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed" style="max-width: 500px; max-height:500px;"/>
+                    <img th:src="@{${cityPage.content.get(i).getImageLink()}}" alt="This image cannot be displayed" style="max-width: 80%; max-height:500px;"/>
                     <div class="d-md-block" style="margin-top: 10px;">
                         <a sec:authorize="hasRole('ROLE_EDITOR')" th:href="@{/edit/{id}(id=${cityPage.content.get(i).getId()})}" class="btn btn-primary">Edit city</a>
                     </div>
