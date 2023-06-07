@@ -1,41 +1,41 @@
 ## About The Application
 
-This is a fullstack Java application for managing multiple users' clients.
+This is a fullstack Java application for managing a list of cities and their images
 
 ### Technologies used:
-* **Backend:** Spring Boot with Spring Security
+* **Backend:** Java 17 and Spring Boot 3 with Spring Security 6
 * **Database:** H2 embedded database with Flyway migration
 * **Frontend:** Thymeleaf
 
 ## Running The Application
 
-To get a local copy up and running follow these steps.
+To get a local copy up and running follow these steps from jar or from source code.
+
+### From .jar
+
+1. Download application .jar file from the latest release
+    ```
+    https://github.com/Delremi/City-List-Application/releases
+    ``` 
+2. Run the following command-line command (NB! Java version >=17 must be used)
+    ```
+    java -jar path-to-application-jar
+    ```
 
 ### From source code
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Delremi/spring-thymeleaf-demo-application.git
+   git clone https://github.com/Delremi/City-List-Application.git
    ```
 2. Run the following Class' main method
    ```
-   SpringThymeleafDemoApplication
+   com.delremi.CityListApplication
    ```
-   
-### From .jar
-
-1. Download latest application .jar file from
-    ```
-    https://github.com/Delremi/spring-thymeleaf-demo-application/releases
-    ``` 
-2. Run the following command-line command
-    ```
-    java -jar path-to-application-jar
-    ``` 
 
 ## Usage
 
-By default the application runs on port 8080 and can be accessed in a web browser at
+By default, the application runs on port 8080 and can be accessed in a web browser at
 ```
 http://localhost:8080
 ```
@@ -44,22 +44,23 @@ Application must be logged into at
 http://localhost:8080/login
 ```
 
-Running the application registers three default users to the application. The credentials for those users are as follows (username:password):
-1. user1:pass
-2. user2:pass
-3. user3:pass
+Running the application registers two default users to the application. 
+One user ("editor") has permissions to edit application city entries, the other ("viewer") does not.
+The credentials for those users are as follows (username:password):
+1. viewer:viewer
+2. editor:editor
 
-Adding a city:
+Display application landing page with list of cities:
 ```
-http://localhost:8080/add
-```
-
-Editing a city:
-```
-http://localhost:8080/edit/<userId>
+http://localhost:8080/
 ```
 
-Loging out:
+Editing a city (NB! If logged in with permitted user):
+```
+http://localhost:8080/edit/<cityId>
+```
+
+Logging out:
 ```
 http://localhost:8080/logout
 ```
